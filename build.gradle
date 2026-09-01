@@ -1888,7 +1888,7 @@ allprojects {
 
     if (JFX_DEPS_URL == "") {
         repositories {
-            mavenCentral()
+            url "http://nexus3.mcf.markhome.server:8081/repository/mcf.markhome.server-hosted/"
             ivy {
                 url "https://download.eclipse.org/eclipse/updates/4.6/R-4.6.3-201703010400/plugins/"
                 metadataSources {
@@ -1953,22 +1953,29 @@ allprojects {
     // All of our projects are java projects
 
     apply plugin: "java"
-    sourceCompatibility = 11
+    sourceCompatibility = 17
 
     // By default all of our projects require junit for testing so we can just
     // setup this dependency here.
+       // testImplementation 'org.hamcrest:hamcrest:3.0'
+       // testImplementation 'org.opentest4j:opentest4j:1.3.0'
     dependencies {
-        testImplementation group: "junit", name: "junit", version: "4.13.2"
-        testImplementation group: "org.hamcrest", name: "hamcrest-core", version: "1.3"
-        testImplementation group: "org.junit.jupiter", name: "junit-jupiter", version: "5.8.1"
-        testImplementation group: "org.junit.jupiter", name: "junit-jupiter-api", version: "5.8.1"
-        testImplementation group: "org.opentest4j", name: "opentest4j", version: "1.2.0"
-        testRuntimeOnly group: "org.apiguardian", name: "apiguardian-api", version: "1.1.2"
-        testRuntimeOnly group: "org.junit.jupiter", name: "junit-jupiter-engine", version: "5.8.1"
-        testRuntimeOnly group: "org.junit.jupiter", name: "junit-jupiter-params", version: "5.8.1"
-        testRuntimeOnly group: "org.junit.platform", name: "junit-platform-commons", version: "1.8.1"
-        testRuntimeOnly group: "org.junit.platform", name: "junit-platform-engine", version: "1.8.1"
-        testRuntimeOnly group: "org.junit.vintage", name: "junit-vintage-engine", version: "5.8.1"
+        testImplementation platform('org.junit:junit-bom:6.1.3')
+        testImplementation 'org.junit:junit'
+        testImplementation 'org.junit.vintage:junit-vintage-engine'
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api'
+        testImplementation 'org.hamcrest:hamcrest'
+        testImplementation 'org.opentest4j:opentest4j'
+		testImplementation 'server.markhome.mcf.v3_1:server.markhome.mcf.v3_1.cflib:3.1.42'
+        testRuntimeOnly platform('org.junit:junit-bom:6.1.3')
+        testRuntimeOnly 'org.apiguardian:apiguardian-api", version: "1.1.2"
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine", version: "5.8.1"
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-params", version: "5.8.1"
+        testRuntimeOnly 'org.junit.platform:junit-platform-commons", version: "1.8.1"
+        testRuntimeOnly 'org.junit.platform:junit-platform-engine", version: "1.8.1"
+        testRuntimeOnly 'org.junit.vintage:junit-vintage-engine", version: "5.8.1"
+		testRuntimeOnly 'server.markhome.mcf.v3_1:server.markhome.mcf.v3_1.cflib:3.1.42'
 
         if (BUILD_CLOSED && DO_JCOV)  {
             testImplementation name: "jcov"
